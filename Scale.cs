@@ -24,8 +24,8 @@ namespace Pos.Hardware
 		public static Scale Current {
 			get {
 				if (_current == null) {
-					if (Shared.Settings.Current.ScalePort != null) {
-						_current = new Scale(Shared.Settings.Current.ScalePort);
+					if (Settings.Current.ScalePort != null) {  // have you own settings value for port, will be something like COM4
+						_current = new Scale(Settings.Current.ScalePort);
 					}
 				}
 				return _current;
@@ -90,7 +90,7 @@ namespace Pos.Hardware
 		public static string Detect() {
 			if (_current != null) {
 				_current.Close(); // prevent having 2 socket on the same port
-				System.Threading.Thread.Sleep(3000);
+				System.Threading.Thread.Sleep(3000); // need to wait because the serial port doesn't close immediatly
 			}
 			// Get a list of serial port names.
 			IEnumerable<string> ports = SerialPort.GetPortNames().OrderByDescending(s => s);
